@@ -1,35 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 
 export default function App() {
-  // const [ text, setText ] = useState('Open up App.js to start working on your app');
-  return (
-    <View style={styles.screen}>
-    {/* <View style={styles.container}>
-          <StatusBar style="inverted" />
-          <Text> { text } </Text>
-          <Button title="Change Text" onPress={() => setText('The text is changed')} />
-        </View> */}
-        <View style={styles.inputContainer}>
-          <TextInput placeholder="Goal" style={styles.input}/>
-          <Button title="ADD" />
-        </View>
-        <View>
+  const [ enteredGoal, setEnteredGoal ] = useState(''),
+  [ goalList, setGoalList ] = useState([]);
 
+  const goalInputHandler = text => {
+    setEnteredGoal(text);
+  };
+
+  const addGoalHandler = () => {
+    setGoalList(currentGoals => [
+      ...currentGoals, 
+      { id: Math.random().toString(), value: enteredGoal }
+    ]);
+  };
+
+  return (
+    <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput 
+            placeholder="Goal" 
+            style={styles.input} 
+            onChangeText={goalInputHandler} 
+            value={enteredGoal}
+          />
+          <Button title="ADD" onPress={addGoalHandler}/>
         </View>
+        <FlatList 
+          keyExtractor={(item, index) => item.id} 
+          data={goalList} 
+          renderItem={itemData => (
+            <View style={styles.goalList}>
+              <Text>{itemData.item.value}</Text>
+            </View>
+          )} 
+        />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  screen: {
+  container: {
     padding: 50
   },
   inputContainer: {
@@ -42,6 +54,13 @@ const styles = StyleSheet.create({
     borderColor:'#000', 
     borderWidth: 1, 
     padding: 10
+  },
+  goalList: {
+    padding: 10,
+    borderColor: '#000000',
+    backgroundColor: '#CCCCCC',
+    borderWidth: 1,
+    marginVertical: 10
   }
 
 });
