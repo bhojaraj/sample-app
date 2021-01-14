@@ -9,3 +9,6 @@ This is a sample app for adding and deleting goals in React Native, no backend h
 - Browser will open new tab with dev tools running the application
 
 Scan the QR code available in dev tools tab via expo client scan option (install it from play store) to run it in your android mobile. Scan same QR code from camera app for running the application in iPhone after installing expo client app from playstore. And you can run it in browser, emulator devices both iPhone and Andorid by selecting the respective device form dev tools tab.
+
+
+Note: expo init application_name to start creating a react native app
